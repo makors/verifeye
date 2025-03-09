@@ -170,6 +170,7 @@ Use this information about the interest to your advantage. Do a high level of ta
 
 IMPORTANT: 
 - Use proper line breaks between paragraphs
+- Do not use markdown formatting, just give a URL
 - Include made-up but realistic-looking links (no real URLs)
 - Use the user's name naturally in the email
 - Do not use any placeholders
@@ -200,6 +201,7 @@ Use this information about the interest to your advantage. Do a high level of ta
 IMPORTANT: 
 - Use proper line breaks where needed
 - Include made-up but realistic-looking links (no real URLs)
+- Do not use markdown formatting, just give a URL
 - Use the user's name naturally in the text
 - Do not use any placeholders
 - Make sure to include at least 3-5 specific red flags that explain why this is a phishing text`

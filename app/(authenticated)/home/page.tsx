@@ -71,12 +71,6 @@ export default function Dashboard() {
           </h1>
           <p className="text-muted-foreground">Begin your journey to learn about online scams and stay safe.</p>
         </div>
-        <Link href="/learn">
-          <Button className="bg-green-500 hover:bg-green-600">
-            Start Learning
-            <ChevronRight className="ml-2 h-4 w-4" />
-          </Button>
-        </Link>
       </div>
 
       {/* Duolingo-style stats cards */}
@@ -111,10 +105,10 @@ export default function Dashboard() {
         {/* Content - Takes up 4 columns */}
         <div className="md:col-span-4 space-y-3">
           {/* Next lesson card */}
-          <Card className="border-green-200 shadow-md">
-            <CardHeader className=" border-green-100">
+          <Card className="border-blue-200 shadow-md">
+            <CardHeader className="border-blue-100">
               <CardTitle className="text-lg flex items-center">
-                <Zap className="mr-2 h-5 w-5 text-green-500" />
+                <Zap className="mr-2 h-5 w-5 text-blue-500" />
                 Start Your Learning Journey
               </CardTitle>
             </CardHeader>
@@ -143,7 +137,7 @@ export default function Dashboard() {
                 
                 <div className="pt-2">
                   <Link href="/learn">
-                    <Button className="w-full bg-green-500 hover:bg-green-600">
+                    <Button className="w-full">
                       Start First Lesson
                       <ChevronRight className="ml-2 h-4 w-4" />
                     </Button>

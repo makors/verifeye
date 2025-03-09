@@ -15,7 +15,7 @@ export default function Home() {
 
           {/* Call to Action Button */}
           <Button asChild>
-            <Link href="/login">Get Started <ChevronRight className=" h-4 w-4" /></Link>
+            <Link href="/login">Get Started <ChevronRight className="h-4 w-4 ml-1" /></Link>
           </Button>
         </div>
       </header>
@@ -35,7 +35,7 @@ export default function Home() {
                 Learn to identify and avoid scams with our simple, engaging lessons designed for everyone, especially
                 seniors.
               </p>
-              <Button size="lg" variant="outline" asChild>
+              <Button size="lg" asChild>
                 <Link href="/login">Start Learning Today</Link>
               </Button>
             </div>
@@ -154,8 +154,8 @@ export default function Home() {
           </div>
           
           <div className="mt-12 text-center">
-            <Button size="lg" variant="outline" asChild>
-              <Link href="/login">Start Learning Today</Link>
+            <Button size="lg" asChild>
+              <Link href="/login">Start Learning Today <ChevronRight className="h-4 w-4 ml-1" /></Link>
             </Button>
           </div>
         </div>

@@ -46,7 +46,7 @@ export function LearningPathway({ lessons, title, description, progress }: Learn
   const getDifficultyColor = (difficulty?: string) => {
     switch (difficulty) {
       case "beginner":
-        return "text-green-500"
+        return "text-blue-500"
       case "intermediate":
         return "text-blue-500"
       case "advanced":
@@ -61,7 +61,7 @@ export function LearningPathway({ lessons, title, description, progress }: Learn
   const getStatusColor = (status: string) => {
     switch (status) {
       case "completed":
-        return "bg-green-500 text-white"
+        return "bg-blue-500 text-white"
       case "in-progress":
         return "bg-blue-500 text-white"
       case "not-started":
@@ -74,11 +74,11 @@ export function LearningPathway({ lessons, title, description, progress }: Learn
   }
 
   const getPathColor = (index: number, lessons: Lesson[]) => {
-    // If current and next lesson are completed, show green path
+    // If current and next lesson are completed, show blue path
     if (index < lessons.length - 1 && 
         lessons[index].status === "completed" && 
         lessons[index + 1].status === "completed") {
-      return "rgba(34, 197, 94, 0.8)"; // green-500
+      return "rgba(59, 130, 246, 0.8)"; // blue-500
     }
     
     // If current is completed and next is in-progress, show blue path
@@ -121,7 +121,7 @@ export function LearningPathway({ lessons, title, description, progress }: Learn
                   <div className="flex justify-center my-6">
                     <div className={`
                       h-8 w-8 rounded-full flex items-center justify-center shadow-sm
-                      ${lessons[index-1].status === "completed" ? "bg-green-100 text-green-500" : "bg-muted text-muted-foreground"}
+                      ${lessons[index-1].status === "completed" ? "bg-blue-100 text-blue-500" : "bg-muted text-muted-foreground"}
                     `}>
                       <ChevronDown className="h-5 w-5" />
                     </div>
@@ -144,21 +144,21 @@ export function LearningPathway({ lessons, title, description, progress }: Learn
                     border-4 border-white
                   `}>
                     {lesson.status === "completed" && (
-                      <CheckCircle className="absolute -top-1 -right-1 h-6 w-6 bg-white rounded-full text-green-500" />
+                      <CheckCircle className="absolute -top-1 -right-1 h-6 w-6 bg-white rounded-full text-blue-500" />
                     )}
                     {index + 1}
                   </div>
                   
                   {/* Lesson card */}
                   <Card className={`
-                    w-full max-w-md shadow-md
+                    w-full max-w-md shadow-md gap-y-3
                     ${index % 2 === 0 ? 'md:ml-4' : 'md:mr-4 md:order-first'}
-                    ${lesson.status === "completed" ? "border-green-500" : 
+                    ${lesson.status === "completed" ? "border-blue-500" : 
                       lesson.status === "in-progress" ? "border-blue-500" : 
-                      lesson.status === "not-started" ? "border-primary" :
+                      lesson.status === "not-started" ? "border-blue-300" :
                       "border-muted"}
                   `}>
-                    <CardHeader className="pb-2">
+                    <CardHeader className="pb-1">
                       <CardTitle className="text-lg flex justify-between items-center">
                         <span>{lesson.title}</span>
                         {lesson.points && (
@@ -215,7 +215,7 @@ export function LearningPathway({ lessons, title, description, progress }: Learn
                       )}
                       {lesson.status === "not-started" && (
                         <Link href={`/learn/intro`}>
-                          <Button className="w-full">
+                          <Button className="w-full" size="lg">
                             Start Lesson
                             <ChevronRight className="ml-2 h-4 w-4" />
                           </Button>

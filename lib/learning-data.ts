@@ -35,7 +35,7 @@ export const fundamentalsCourse: Course = {
   progress: 0,
   status: "available",
   difficulty: "beginner",
-  estimatedTime: "2-3 hours",
+  estimatedTime: "45-60 min",
   lessons: [
     {
       id: 1,
@@ -54,7 +54,7 @@ export const fundamentalsCourse: Course = {
       progress: 0,
       status: "locked" as const,
       difficulty: "beginner",
-      estimatedTime: "15 min",
+      estimatedTime: "5 min",
       points: 150,
     },
     {
@@ -64,7 +64,7 @@ export const fundamentalsCourse: Course = {
       progress: 0,
       status: "locked" as const,
       difficulty: "beginner",
-      estimatedTime: "15 min",
+      estimatedTime: "6 min",
       points: 150,
     },
     {
@@ -74,7 +74,7 @@ export const fundamentalsCourse: Course = {
       progress: 0,
       status: "locked" as const,
       difficulty: "beginner",
-      estimatedTime: "15 min",
+      estimatedTime: "7 min",
       points: 150,
     },
     {
@@ -84,7 +84,7 @@ export const fundamentalsCourse: Course = {
       progress: 0,
       status: "locked" as const,
       difficulty: "beginner",
-      estimatedTime: "15 min",
+      estimatedTime: "5 min",
       points: 150,
     },
     {
@@ -94,7 +94,7 @@ export const fundamentalsCourse: Course = {
       progress: 0,
       status: "locked" as const,
       difficulty: "beginner",
-      estimatedTime: "15 min",
+      estimatedTime: "4 min",
       points: 150,
     },
     {
@@ -104,7 +104,7 @@ export const fundamentalsCourse: Course = {
       progress: 0,
       status: "locked" as const,
       difficulty: "intermediate",
-      estimatedTime: "20 min",
+      estimatedTime: "8 min",
       points: 200,
     },
     {
@@ -114,7 +114,7 @@ export const fundamentalsCourse: Course = {
       progress: 0,
       status: "locked" as const,
       difficulty: "intermediate",
-      estimatedTime: "20 min",
+      estimatedTime: "7 min",
       points: 200,
     },
     {
@@ -124,7 +124,7 @@ export const fundamentalsCourse: Course = {
       progress: 0,
       status: "locked" as const,
       difficulty: "intermediate",
-      estimatedTime: "15 min",
+      estimatedTime: "6 min",
       points: 200,
     },
     {
@@ -134,7 +134,7 @@ export const fundamentalsCourse: Course = {
       progress: 0,
       status: "locked" as const,
       difficulty: "intermediate",
-      estimatedTime: "15 min",
+      estimatedTime: "5 min",
       points: 200,
     },
   ]
@@ -149,7 +149,7 @@ export const advancedCourse: Course = {
   progress: 0,
   status: "locked",
   difficulty: "intermediate",
-  estimatedTime: "3-4 hours",
+  estimatedTime: "30-45 min",
   lessons: [] // Empty for now
 };
 
@@ -161,7 +161,7 @@ export const expertCourse: Course = {
   progress: 0,
   status: "locked",
   difficulty: "advanced",
-  estimatedTime: "4-5 hours",
+  estimatedTime: "35-50 min",
   lessons: [] // Empty for now
 };
 
