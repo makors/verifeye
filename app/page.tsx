@@ -71,24 +71,24 @@ export default function Home() {
                 <p className="text-muted-foreground">Lost to scams in 2021 alone</p>
               </div>
               <div className="flex flex-col items-center text-center space-y-2">
-                <div className="text-3xl font-bold md:text-4xl">2.8M</div>
+                <div className="text-3xl font-bold md:text-4xl">2.4M</div>
                 <p className="text-muted-foreground">Fraud reports filed annually</p>
               </div>
               <div className="flex flex-col items-center text-center space-y-2">
-                <div className="text-3xl font-bold md:text-4xl">33%</div>
-                <p className="text-muted-foreground">Higher risk for adults over 60</p>
+                <div className="text-3xl font-bold md:text-4xl">11%</div>
+                <p className="text-muted-foreground">Rise in scams targeting adults over 60</p>
               </div>
               <div className="flex flex-col items-center text-center space-y-2">
-                <div className="text-3xl font-bold md:text-4xl">71%</div>
-                <p className="text-muted-foreground">Increase in online scams since 2020</p>
+                <div className="text-3xl font-bold md:text-4xl">$80M</div>
+                <p className="text-muted-foreground">Money lost to cryptocurrency scams in 2021</p>
               </div>
               <div className="flex flex-col items-center text-center space-y-2">
-                <div className="text-3xl font-bold md:text-4xl">$1,500</div>
+                <div className="text-3xl font-bold md:text-4xl">$500</div>
                 <p className="text-muted-foreground">Median loss per scam victim</p>
               </div>
               <div className="flex flex-col items-center text-center space-y-2">
-                <div className="text-3xl font-bold md:text-4xl">56%</div>
-                <p className="text-muted-foreground">Of seniors don't report scams</p>
+                <div className="text-3xl font-bold md:text-4xl">25%</div>
+                <p className="text-muted-foreground">Percentage of Phising scams</p>
               </div>
             </div>
           </div>
