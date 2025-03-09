@@ -17,22 +17,6 @@ export default function Home() {
             <span className="text-xl font-bold">Verifeye</span>
           </div>
 
-          {/* Navigation Links */}
-          <nav className="hidden md:flex items-center justify-center gap-8">
-            <Link href="#" className="text-sm font-medium hover:underline">
-              Home
-            </Link>
-            <Link href="#scam-types" className="text-sm font-medium hover:underline">
-              Scam Types
-            </Link>
-            <Link href="#learn" className="text-sm font-medium hover:underline">
-              Learning Center
-            </Link>
-            <Link href="#get-started" className="text-sm font-medium hover:underline">
-              Resources
-            </Link>
-          </nav>
-
           {/* Call to Action Button */}
           <Button asChild>
             <Link href="#get-started">Get Started</Link>
