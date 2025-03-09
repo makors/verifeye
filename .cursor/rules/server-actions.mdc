@@ -1,0 +1,10 @@
+---
+description: Rather than using API endpoints for fetching, use Server Actions
+globs: 
+alwaysApply: false
+---
+
+# Your rule content
+
+- You can @ files here
+- You can use markdown but dont have to

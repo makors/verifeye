@@ -10,6 +10,7 @@ export const user = pgTable("user", {
  age: integer('age'),
  gender: text('gender'),
  interests: text('interests'),
+ streak: integer('streak').default(0),
  createdAt: timestamp('created_at').notNull(),
  updatedAt: timestamp('updated_at').notNull()
 				});

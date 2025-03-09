@@ -30,7 +30,7 @@ export default function SubmitButton() {
             }
 
             // Redirect to learn/start
-            router.push("/learn/start");
+            router.push("/learn/inital");
         } catch (error) {
             console.error('Error saving profile:', error);
         } finally {

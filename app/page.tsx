@@ -1,9 +1,8 @@
 import Link from "next/link"
-import Image from "next/image"
-import { Radar, Mail, Phone, CreditCard, AlertTriangle, BookOpen, Award, ChevronRight } from "lucide-react"
+import { ChevronRight } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import Logo from "@/components/ui/logo"
 
 export default function Home() {
   return (
@@ -12,14 +11,11 @@ export default function Home() {
       <header className="sticky top-0 z-40 w-full border-b bg-background">
         <div className="container mx-auto flex h-16 items-center justify-between px-4 max-w-4xl">
           {/* Logo and Brand Name */}
-          <div className="flex items-center gap-2">
-            <Radar className="h-6 w-6 text-primary" />
-            <span className="text-xl font-bold">Verifeye</span>
-          </div>
+          <Logo />
 
           {/* Call to Action Button */}
           <Button asChild>
-            <Link href="#get-started">Get Started</Link>
+            <Link href="/login">Get Started <ChevronRight className=" h-4 w-4" /></Link>
           </Button>
         </div>
       </header>
@@ -40,7 +36,7 @@ export default function Home() {
                 seniors.
               </p>
               <Button size="lg" variant="outline" asChild>
-                <Link href="#get-started">Start Learning Today</Link>
+                <Link href="/login">Start Learning Today</Link>
               </Button>
             </div>
           </div>
