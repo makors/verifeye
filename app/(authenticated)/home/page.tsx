@@ -10,29 +10,56 @@ import {
   Flame,
   Target,
   Zap,
-  Clock
+  Clock,
+  History
 } from "lucide-react"
+import { useEffect, useState } from "react"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { authClient } from "@/lib/auth-client"
 import { Skeleton } from "@/components/ui/skeleton"
 import { BadgeCard } from "@/components/dashboard/badge-card"
+import { ActivityCard } from "@/components/dashboard/activity-card"
 import { badges, learningPath } from "@/lib/learning-data"
 import { Progress } from "@/components/ui/progress"
+import { getUserActivities } from "@/lib/actions/activity"
+import { getUserXP } from "@/lib/actions/user"
 
 export default function Dashboard() {
   const {
     data: session,
     isPending,
   } = authClient.useSession();
+  
+  const [userActivities, setUserActivities] = useState<any[]>([]);
+  const [activitiesLoading, setActivitiesLoading] = useState(true);
+  const [totalXP, setTotalXP] = useState(0);
+
+  useEffect(() => {
+    const fetchActivities = async () => {
+      try {
+        setActivitiesLoading(true);
+        const { activities } = await getUserActivities(5);
+        const { xp } = await getUserXP();
+        
+        setUserActivities(activities || []);
+        setTotalXP(typeof xp === 'number' ? xp : 0);
+      } catch (error) {
+        console.error("Error fetching activities:", error);
+      } finally {
+        setActivitiesLoading(false);
+      }
+    };
+
+    fetchActivities();
+  }, []);
 
   // Calculate stats
   const totalLessons = learningPath.lessons.length;
   const completedLessons = learningPath.lessons.filter((lesson) => (lesson.status as any) === "completed").length;
   const inProgressLessons = learningPath.lessons.filter((lesson) => (lesson.status as any) === "in-progress").length;
   const earnedBadges = badges.filter((badge) => badge.earned).length;
-  const totalPoints = 0; // Starting from zero
   const streak = 0; // Days streak
 
   return (
@@ -82,10 +109,10 @@ export default function Dashboard() {
         </div>
 
         {/* Content - Takes up 4 columns */}
-        <div className="md:col-span-4 space-y-6">
+        <div className="md:col-span-4 space-y-3">
           {/* Next lesson card */}
           <Card className="border-green-200 shadow-md">
-            <CardHeader className="pb-2 bg-green-50 border-b border-green-100">
+            <CardHeader className=" border-green-100">
               <CardTitle className="text-lg flex items-center">
                 <Zap className="mr-2 h-5 w-5 text-green-500" />
                 Start Your Learning Journey
@@ -126,45 +153,62 @@ export default function Dashboard() {
             </CardContent>
           </Card>
 
-          {/* Learning path preview */}
-          <Card>
+          {/* Recent Activities */}
+          <Card className="gap-y-4">
             <CardHeader>
-              <CardTitle>Your Learning Path</CardTitle>
+              <div className="flex items-center justify-between">
+                <CardTitle className="text-lg flex items-center">
+                  <History className="mr-2 h-5 w-5 text-primary" />
+                  Recent Activities
+                </CardTitle>
+              </div>
             </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div className="flex justify-between text-sm mb-1">
-                  <span>Overall Progress</span>
-                  <span>{learningPath.progress}%</span>
-                </div>
-                <Progress value={learningPath.progress} className="h-2 mb-6" />
-                
-                <div className="flex justify-between items-center">
-                  {learningPath.lessons.slice(0, 5).map((lesson, index) => (
-                    <div key={lesson.id} className="flex flex-col items-center">
-                      <div className={`
-                        h-12 w-12 rounded-full flex items-center justify-center text-lg font-bold mb-2
-                        ${(lesson.status as any) === "completed" ? "bg-green-500 text-white" : 
-                          (lesson.status as any) === "in-progress" ? "bg-blue-500 text-white" : 
-                          (lesson.status as any) === "not-started" ? "bg-primary text-primary-foreground" :
-                          "bg-muted text-muted-foreground"}
-                      `}>
-                        {index + 1}
+            <CardContent className="pt-0">
+              {activitiesLoading ? (
+                <div className="space-y-4">
+                  {[...Array(3)].map((_, i) => (
+                    <div key={i} className="flex items-center gap-3 py-3">
+                      <Skeleton className="h-8 w-8 rounded-full" />
+                      <div className="space-y-2 flex-1">
+                        <Skeleton className="h-4 w-full" />
+                        <Skeleton className="h-3 w-20" />
                       </div>
-                      <span className="text-xs text-center">{lesson.title.split(' ').slice(0, 2).join(' ')}</span>
+                      <Skeleton className="h-6 w-16 rounded-full" />
                     </div>
                   ))}
                 </div>
-                
-                <div className="mt-4 text-center">
-                  <Link href="/learn">
-                    <Button variant="outline">
-                      View Full Learning Path
+              ) : userActivities.length > 0 ? (
+                <div className="divide-y">
+                  {userActivities.map((activity) => (
+                    <ActivityCard
+                      key={activity.id}
+                      emoji={activity.emoji}
+                      description={activity.description}
+                      xpAmount={activity.xpAmount}
+                      createdAt={new Date(activity.createdAt)}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-8">
+                  <p className="text-muted-foreground">No activities yet. Start learning to earn XP!</p>
+                  <Link href="/learn" className="mt-4 inline-block">
+                    <Button variant="outline" size="sm">
+                      Start Learning
                       <ChevronRight className="ml-2 h-4 w-4" />
                     </Button>
                   </Link>
                 </div>
-              </div>
+              )}
+              
+              {userActivities.length > 0 && (
+                <div className="mt-4 text-center">
+                  <Button variant="ghost" size="sm">
+                    View All Activities
+                    <ChevronRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>

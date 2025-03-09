@@ -2,7 +2,7 @@ import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { db } from "@/lib/db"; // your drizzle instance
 import { nextCookies } from "better-auth/next-js";
-import { user, session, account, verification } from "./schema";
+import { user, session, account, verification, emailMessage, textMessage } from "./schema";
  
 export const auth = betterAuth({
     database: drizzleAdapter(db, {
@@ -12,6 +12,8 @@ export const auth = betterAuth({
             session,
             account,
             verification,
+            emailMessage,
+            textMessage
         },
     }),
     socialProviders: {
@@ -40,6 +42,24 @@ export const auth = betterAuth({
                 defaultValue: "",
                 input: false,
             },
+            streak: {
+                type: "number",
+                required: false,
+                defaultValue: 0,
+                input: false,
+            },
+            emailMessageId: {
+                type: "string",
+                required: false,
+                defaultValue: null,
+                input: false,
+            },
+            textMessageId: {
+                type: "string",
+                required: false,
+                defaultValue: null,
+                input: false,
+            }
         }
     },
     plugins: [nextCookies()]

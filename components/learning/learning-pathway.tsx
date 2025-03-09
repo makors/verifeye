@@ -1,4 +1,5 @@
 import { FileCheck } from "lucide-react"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
@@ -213,10 +214,12 @@ export function LearningPathway({ lessons, title, description, progress }: Learn
                         </Button>
                       )}
                       {lesson.status === "not-started" && (
-                        <Button className="w-full">
-                          Start Lesson
-                          <ChevronRight className="ml-2 h-4 w-4" />
-                        </Button>
+                        <Link href={`/learn/intro`}>
+                          <Button className="w-full">
+                            Start Lesson
+                            <ChevronRight className="ml-2 h-4 w-4" />
+                          </Button>
+                        </Link>
                       )}
                       {lesson.status === "locked" && (
                         <Button variant="outline" className="w-full" disabled>

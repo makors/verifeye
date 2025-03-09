@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { useFormState } from "../state";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { saveUserProfile } from "../actions";
 
 export default function SubmitButton() {
     const { formData } = useFormState();
@@ -12,25 +13,19 @@ export default function SubmitButton() {
         try {
             setIsLoading(true);
             
-            // Save user profile data
-            const response = await fetch('/api/user/profile', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    age: formData.age,
-                    gender: formData.gender,
-                    interests: formData.interests,
-                }),
+            // Use the server action instead of the REST API
+            const result = await saveUserProfile({
+                age: formData.age,
+                gender: formData.gender,
+                interests: formData.interests,
             });
 
-            if (!response.ok) {
-                throw new Error('Failed to save profile data');
+            if (!result.success) {
+                throw new Error(result.error || 'Failed to save profile data');
             }
 
             // Redirect to learn/start
-            router.push("/learn/inital");
+            router.push("/home");
         } catch (error) {
             console.error('Error saving profile:', error);
         } finally {

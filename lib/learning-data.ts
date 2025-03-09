@@ -44,7 +44,7 @@ export const fundamentalsCourse: Course = {
       progress: 0,
       status: "not-started" as const,
       difficulty: "beginner",
-      estimatedTime: "10 min",
+      estimatedTime: "2 min",
       points: 100,
     },
     {
@@ -259,6 +259,8 @@ export const badges = [
     earned: false,
   },
 ];
+
+
 
 export const leaderboard = [
   { id: 1, name: "Sarah Johnson", points: 1250, avatar: "/placeholder.svg?height=40&width=40" },

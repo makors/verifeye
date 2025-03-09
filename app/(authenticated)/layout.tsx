@@ -10,6 +10,7 @@ import { UserAvatar } from "@/components/ui/user-avatar"
 import { cn } from "@/lib/utils"
 import { Skeleton } from "@/components/ui/skeleton"
 import { getUserStreak } from "@/lib/actions/user"
+import { getUserXP } from "@/lib/actions/activity"
 
 export default function AuthenticatedLayout({
   children,
@@ -18,23 +19,29 @@ export default function AuthenticatedLayout({
 }) {
   const pathname = usePathname()
   const [streak, setStreak] = useState<number | null>(null)
+  const [xp, setXP] = useState<number | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const fetchStreak = async () => {
+    const fetchUserData = async () => {
       try {
         setLoading(true)
-        const data = await getUserStreak()
-        setStreak(data.streak)
+        const [streakData, xpData] = await Promise.all([
+          getUserStreak(),
+          getUserXP()
+        ])
+        setStreak(streakData.streak)
+        setXP(xpData.xp)
       } catch (error) {
-        console.error("Error fetching streak:", error)
+        console.error("Error fetching user data:", error)
         setStreak(0)
+        setXP(0)
       } finally {
         setLoading(false)
       }
     }
 
-    fetchStreak()
+    fetchUserData()
   }, [])
 
   const navItems = [
@@ -47,11 +54,6 @@ export default function AuthenticatedLayout({
       href: "/learn",
       label: "Learn",
       icon: BookOpen,
-    },
-    {
-      href: "/achievements",
-      label: "Achievements",
-      icon: Trophy,
     },
     {
       href: "/leaderboard",
@@ -100,7 +102,11 @@ export default function AuthenticatedLayout({
             </div>
             <div className="flex items-center gap-1.5 bg-amber-50 text-amber-500 px-3 py-1.5 rounded-full">
               <Trophy className="h-4 w-4" />
-              <span className="font-bold text-sm">0 XP</span>
+              {loading ? (
+                <Skeleton className="w-5 h-5 rounded-full" />
+              ) : (
+                <span className="font-bold text-sm">{xp} XP</span>
+              )}
             </div>
           </div>
           <UserAvatar />
