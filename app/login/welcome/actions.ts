@@ -87,7 +87,7 @@ export async function saveUserProfile(formData: {
     await initializeUserLessons(session.user.id);
 
     // Initialize interactive lesson
-    initalizeInteractiveLesson(session.user.id);
+    await initalizeInteractiveLesson(session.user.id);
 
     return { success: true };
   } catch (error) {
