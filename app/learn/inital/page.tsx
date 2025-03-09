@@ -110,9 +110,9 @@ export default function PhoneExamplePage() {
               variant="default"
               className='min-w-24'
               size="lg"
-          >
-            Start Learning
-          </Button>
+            >
+              Start Learning
+            </Button>
           </Link>
         )}
       </div>
