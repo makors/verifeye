@@ -10,7 +10,7 @@ export default function Welcome() {
         isPending, //loading state
         error, //error object
         refetch //refetch the session
-    } = authClient.useSession() 
+    } = authClient.useSession();
 
     if (error) {
         console.error(error)
