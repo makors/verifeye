@@ -139,7 +139,7 @@ PayPal Security Team`,
         {/* Email Body */}
         <div className="p-4 bg-white">
           <div 
-            className="prose max-w-none"
+            className="prose max-w-none whitespace-pre-line"
             dangerouslySetInnerHTML={{ __html: emailBody }}
           />
         </div>

@@ -103,7 +103,14 @@ export async function initalizeInteractiveLesson(userId: string) {
 
   Create a personalized phishing email example based on user data.
   Keep all responses brief and to the point.
-  IMPORTANT: Always include at least 3-5 specific red flags in your response that explain why this is a phishing email.
+  
+  IMPORTANT FORMATTING REQUIREMENTS:
+  1. Use proper line breaks (\\n) between paragraphs for proper display to end users
+  2. All links must be completely made up but realistic-looking (e.g., amazon-secure.com)
+  3. Do NOT use any placeholders or fill-in-the-blanks (like [NAME] or {COMPANY})
+  4. Use the user's name naturally in the email where appropriate
+  5. Include at least 3-5 specific red flags that explain why this is a phishing email
+  
   These red flags should be clear, educational points that help the user learn to identify scams.
   `;
 
@@ -112,13 +119,21 @@ export async function initalizeInteractiveLesson(userId: string) {
 
   Create a personalized phishing text message example based on user data.
   Keep all responses brief and to the point.
-  IMPORTANT: Always include at least 3-5 specific red flags in your response that explain why this is a phishing text.
+  
+  IMPORTANT FORMATTING REQUIREMENTS:
+  1. Use proper line breaks (\\n) where appropriate for proper display to end users
+  2. All links must be completely made up but realistic-looking (e.g., bit.ly/secure-bank)
+  3. Do NOT use any placeholders or fill-in-the-blanks (like [NAME] or {COMPANY})
+  4. Use the user's name naturally in the text where appropriate
+  5. Include at least 3-5 specific red flags that explain why this is a phishing text
+  
   These red flags should be clear, educational points that help the user learn to identify scams.
   `;
 
   try {
     // Get user data with existing message references
     const userInfo = await db.select({
+      name: user.name,
       age: user.age,
       gender: user.gender,
       interests: user.interests,
@@ -145,7 +160,20 @@ export async function initalizeInteractiveLesson(userId: string) {
           },
           {
             role: "user",
-            content: `Generate a phishing email example based on this user data: Age: ${userInfo.age || 30}, Gender: ${userInfo.gender || "unspecified"}, Interests: ${userInfo.interests || "technology, online safety"}. Make sure to include at least 3-5 specific red flags that explain why this is a phishing email. Use line breaks.`
+            content: `Generate a phishing email example based on this user data: 
+Name: ${userInfo.name || "Alex"},
+Age: ${userInfo.age || 30}, 
+Gender: ${userInfo.gender || "unspecified"}, 
+Interests: ${userInfo.interests || "technology, online safety"}. 
+
+Use this information about the interest to your advantage. Do a high level of targeting and personalizationm, as this is typical of scams.
+
+IMPORTANT: 
+- Use proper line breaks between paragraphs
+- Include made-up but realistic-looking links (no real URLs)
+- Use the user's name naturally in the email
+- Do not use any placeholders
+- Make sure to include at least 3-5 specific red flags that explain why this is a phishing email`
           }
         ],
         response_format: zodResponseFormat(EmailContent, "email_content")
@@ -161,7 +189,20 @@ export async function initalizeInteractiveLesson(userId: string) {
           },
           {
             role: "user",
-            content: `Generate a phishing text message example based on this user data: Age: ${userInfo.age || 30}, Gender: ${userInfo.gender || "unspecified"}, Interests: ${userInfo.interests || "technology, online safety"}. Make sure to include at least 3-5 specific red flags that explain why this is a phishing text.`
+            content: `Generate a phishing text message example based on this user data: 
+Name: ${userInfo.name || "Alex"},
+Age: ${userInfo.age || 30}, 
+Gender: ${userInfo.gender || "unspecified"}, 
+Interests: ${userInfo.interests || "technology, online safety"}. 
+
+Use this information about the interest to your advantage. Do a high level of targeting and personalizationm, as this is typical of scams.
+
+IMPORTANT: 
+- Use proper line breaks where needed
+- Include made-up but realistic-looking links (no real URLs)
+- Use the user's name naturally in the text
+- Do not use any placeholders
+- Make sure to include at least 3-5 specific red flags that explain why this is a phishing text`
           }
         ],
         response_format: zodResponseFormat(TextContent, "text_content")
@@ -197,88 +238,73 @@ export async function initalizeInteractiveLesson(userId: string) {
     let emailId = userInfo.emailMessageId;
     let textId = userInfo.textMessageId;
     
-    const dbOperations = [];
-    
-    // Handle email message
+    // Handle email message first
     if (emailId) {
       // Update existing email message
-      dbOperations.push(
-        db.update(emailMessage)
-          .set({
-            sender: emailData.sender.name,
-            senderEmail: emailData.sender.email,
-            subject: emailData.subjectLine,
-            content: emailData.body,
-            redFlags: JSON.stringify(emailRedFlags),
-            updatedAt: new Date()
-          })
-          .where(eq(emailMessage.id, emailId))
-      );
-    } else {
-      // Create new email message
-      emailId = crypto.randomUUID();
-      dbOperations.push(
-        db.insert(emailMessage).values({
-          id: emailId,
+      await db.update(emailMessage)
+        .set({
           sender: emailData.sender.name,
           senderEmail: emailData.sender.email,
           subject: emailData.subjectLine,
           content: emailData.body,
           redFlags: JSON.stringify(emailRedFlags),
-          createdAt: new Date(),
           updatedAt: new Date()
         })
-      );
+        .where(eq(emailMessage.id, emailId));
+    } else {
+      // Create new email message
+      emailId = crypto.randomUUID();
+      await db.insert(emailMessage).values({
+        id: emailId,
+        sender: emailData.sender.name,
+        senderEmail: emailData.sender.email,
+        subject: emailData.subjectLine,
+        content: emailData.body,
+        redFlags: JSON.stringify(emailRedFlags),
+        createdAt: new Date(),
+        updatedAt: new Date()
+      });
     }
     
-    // Handle text message
+    // Handle text message next
     if (textId) {
       // Update existing text message
-      dbOperations.push(
-        db.update(textMessage)
-          .set({
-            sender: textData.sender.name,
-            content: textData.body,
-            redFlags: JSON.stringify(textRedFlags),
-            updatedAt: new Date()
-          })
-          .where(eq(textMessage.id, textId))
-      );
+      await db.update(textMessage)
+        .set({
+          sender: textData.sender.name,
+          content: textData.body,
+          redFlags: JSON.stringify(textRedFlags),
+          updatedAt: new Date()
+        })
+        .where(eq(textMessage.id, textId));
     } else {
       // Create new text message
       textId = crypto.randomUUID();
-      dbOperations.push(
-        db.insert(textMessage).values({
-          id: textId,
-          sender: textData.sender.name,
-          subject: "",
-          content: textData.body,
-          redFlags: JSON.stringify(textRedFlags),
-          createdAt: new Date(),
-          updatedAt: new Date()
-        })
-      );
+      await db.insert(textMessage).values({
+        id: textId,
+        sender: textData.sender.name,
+        subject: "",
+        content: textData.body,
+        redFlags: JSON.stringify(textRedFlags),
+        createdAt: new Date(),
+        updatedAt: new Date()
+      });
     }
     
-    // Always update user references to ensure they're set
-    dbOperations.push(
-      db.update(user)
-        .set({
-          emailMessageId: emailId,
-          textMessageId: textId
-        })
-        .where(eq(user.id, userId))
-    );
-    
-    // Execute all database operations in parallel
-    await Promise.all(dbOperations);
+    // Finally, update user references after messages are created
+    await db.update(user)
+      .set({
+        emailMessageId: emailId,
+        textMessageId: textId
+      })
+      .where(eq(user.id, userId));
 
     console.log("Interactive lesson initialization complete");
 
     return { success: true };
   } catch (error) {
     console.error("Error initializing interactive lesson:", error);
-    return { success: false, error: "Failed to initialize interactive lesson" };
+    return { success: false, error: `Failed to initialize interactive lesson: ${error}` };
   }
 }
 

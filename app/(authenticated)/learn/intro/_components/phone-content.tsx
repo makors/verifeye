@@ -111,7 +111,7 @@ export default function PhoneContent() {
             className={`max-w-[80%] ${message.sender === 'them' ? 'self-start' : 'self-end'}`}
           >
             <div 
-              className={`p-3 rounded-2xl ${
+              className={`p-3 rounded-2xl whitespace-pre-line ${
                 message.sender === 'them' 
                   ? 'bg-gray-200 rounded-tl-sm text-black' 
                   : 'bg-blue-500 rounded-tr-sm text-white'
